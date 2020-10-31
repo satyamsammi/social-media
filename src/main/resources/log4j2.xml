@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN">
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="[%highlight{${LOG_LEVEL_PATTERN:-%5p}}{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green bold, DEBUG=green bold, TRACE=blue}] %d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}}  : [%t] %style{%c{1}}{cyan} -  %msg %n"
+            />
+        </Console>
+        <RollingFile
+                name="rollingFile"
+                fileName="logs/social-media-service.log"
+                filePattern="logs/social-media-service.%d{yyyy-MM-dd HH}-%i.log.gz">
+
+            <PatternLayout
+                    pattern="[%highlight{${LOG_LEVEL_PATTERN:-%5p}}{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green bold, DEBUG=green bold, TRACE=blue}] %d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}}  : [%t] %style{%c{1}}{cyan} -  %msg %n"
+            />
+
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="20MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="60">
+                <Delete basePath="logs/" maxDepth="2">
+                    <IfLastModified age="14d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <root level="INFO">
+            <appender-ref ref="console" level="DEBUG"/>
+            <appender-ref ref="rollingFile" level="DEBUG"/>
+        </root>
+    </Loggers>
+</configuration>
