@@ -174,8 +174,6 @@ public class PlatformUserServiceImpl implements PlatformUserService {
                     findByRequesterUserAndRequesteeUserOrderByCreatedOnDesc(requesterUser, requesteeUser);
             if (!userRelationshipList.isEmpty() &&
                     Constants.PlatformUserRelationshipStatus.PENDING.equals(userRelationshipList.get(0).getStatus())) {
-                log.error("getPendingRequest:: Relationship already exists in between {}<>{} as {}",
-                        requesteeUser.getUsername(), requesterUser.getUsername(), userRelationshipList.get(0).getStatus());
                 return userRelationshipList.get(0);
             } else {
                 log.error("getPendingRequest:: Pending Friend request doesn't exist from {} to {}",
